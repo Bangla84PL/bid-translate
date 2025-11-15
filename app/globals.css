@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 15 15 15; /* #0F0F0F */
+    --foreground: 0 0 100%; /* #FFFFFF */
+
+    --card: 26 26 26; /* #1A1A1A */
+    --card-foreground: 0 0 100%;
+
+    --popover: 26 26 26;
+    --popover-foreground: 0 0 100%;
+
+    --primary: 217 91 60%; /* #3B82F6 */
+    --primary-foreground: 0 0 100%;
+
+    --secondary: 26 26 26;
+    --secondary-foreground: 0 0 100%;
+
+    --muted: 26 26 26;
+    --muted-foreground: 0 0 63%; /* #A0A0A0 */
+
+    --accent: 217 91 60%; /* #3B82F6 */
+    --accent-foreground: 0 0 100%;
+
+    --destructive: 0 84 60%; /* #EF4444 */
+    --destructive-foreground: 0 0 100%;
+
+    --border: 26 26 26;
+    --input: 26 26 26;
+    --ring: 217 91 60%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background-primary text-text-primary font-sans;
+  }
+}
+
+/* JetBrains Mono font */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3B82F6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB;
+}
+
+/* Animations */
+@keyframes timer-countdown {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0%;
+  }
+}
+
+@keyframes pulse-price {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-timer-countdown {
+  animation: timer-countdown linear;
+}
+
+.animate-pulse-price {
+  animation: pulse-price 0.5s ease-in-out;
+}
