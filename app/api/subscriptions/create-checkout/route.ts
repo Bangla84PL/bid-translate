@@ -3,9 +3,14 @@ import { getCurrentAgency, getCurrentUser } from "@/lib/supabase/auth";
 import Stripe from "stripe";
 import { STRIPE_PLANS, PlanType } from "@/lib/stripe/config";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not defined");
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2025-10-29.clover",
+  });
+}
 
 /**
  * POST /api/subscriptions/create-checkout
@@ -13,6 +18,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
  */
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripe();
     const user = await getCurrentUser();
     const agency = await getCurrentAgency();
 
