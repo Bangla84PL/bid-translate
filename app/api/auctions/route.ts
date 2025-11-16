@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     const supabase = await createServerSupabaseClient();
 
     const { data: auctions, error } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .select("*")
       .eq("agency_id", agency.id)
       .order("created_at", { ascending: false });
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     // Create auction
     const { data: auction, error: auctionError } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .insert({
         agency_id: agency.id,
         language_pair: validatedData.languagePair,
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
     }));
 
     const { error: participantsError } = await serviceSupabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .insert(participants);
 
     if (participantsError) {
@@ -113,7 +113,7 @@ export async function POST(request: NextRequest) {
 
     // Increment auction usage
     await supabase
-      .from("agencies")
+      .from("bid_translate_agencies")
       .update({
         auctions_used_this_month: agency.auctions_used_this_month + 1,
       })

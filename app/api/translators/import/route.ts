@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     // Check subscription limits
     const { count: existingCount } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .select("*", { count: "exact", head: true })
       .eq("agency_id", agency.id);
 
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
     }));
 
     const { data, error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .insert(translatorRecords)
       .select();
 

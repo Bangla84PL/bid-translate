@@ -12,7 +12,7 @@ async function getDashboardStats(agencyId: string) {
 
   // Get active auctions count
   const { count: activeAuctions } = await supabase
-    .from("auctions")
+    .from("bid_translate_auctions")
     .select("*", { count: "exact", head: true })
     .eq("agency_id", agencyId)
     .in("status", ["in_progress", "pending_start"]);
@@ -23,7 +23,7 @@ async function getDashboardStats(agencyId: string) {
   startOfMonth.setHours(0, 0, 0, 0);
 
   const { count: completedThisMonth } = await supabase
-    .from("auctions")
+    .from("bid_translate_auctions")
     .select("*", { count: "exact", head: true })
     .eq("agency_id", agencyId)
     .eq("status", "completed")
@@ -31,7 +31,7 @@ async function getDashboardStats(agencyId: string) {
 
   // Get average savings
   const { data: completedAuctions } = await supabase
-    .from("auctions")
+    .from("bid_translate_auctions")
     .select("starting_price, final_price")
     .eq("agency_id", agencyId)
     .eq("status", "completed")
@@ -48,7 +48,7 @@ async function getDashboardStats(agencyId: string) {
 
   // Get success rate (completed vs failed)
   const { count: totalAuctions } = await supabase
-    .from("auctions")
+    .from("bid_translate_auctions")
     .select("*", { count: "exact", head: true })
     .eq("agency_id", agencyId)
     .in("status", ["completed", "failed", "cancelled"]);
@@ -69,7 +69,7 @@ async function getRecentAuctions(agencyId: string) {
   const supabase = await createServerSupabaseClient();
 
   const { data: auctions } = await supabase
-    .from("auctions")
+    .from("bid_translate_auctions")
     .select("id, language_pair, word_count, status, current_price, created_at")
     .eq("agency_id", agencyId)
     .order("created_at", { ascending: false })

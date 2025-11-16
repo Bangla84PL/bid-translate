@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create agency record
-    const { error: agencyError } = await supabase.from("agencies").insert({
+    const { error: agencyError } = await supabase.from("bid_translate_agencies").insert({
       owner_id: authData.user.id,
       company_name: validatedData.companyName,
       nip: validatedData.nip,

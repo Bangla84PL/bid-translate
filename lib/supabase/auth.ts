@@ -31,7 +31,7 @@ export async function getCurrentAgency() {
   }
 
   const { data: agency, error } = await supabase
-    .from("agencies")
+    .from("bid_translate_agencies")
     .select("*")
     .eq("owner_id", user.id)
     .single();
