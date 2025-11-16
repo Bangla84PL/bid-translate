@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
 
     // Get all auctions in range
     const { data: auctions } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .select("*")
       .eq("agency_id", agency.id)
       .gte("created_at", startDate.toISOString());
@@ -93,7 +93,7 @@ export async function GET(request: NextRequest) {
 
     // Get translator participation stats
     const { data: participantStats } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select(`
         translator_id,
         is_winner,

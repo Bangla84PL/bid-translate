@@ -21,7 +21,7 @@ export async function GET(
 
     // Get translator with all related data
     const { data: translator, error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .select(`
         *,
         auction_participants (

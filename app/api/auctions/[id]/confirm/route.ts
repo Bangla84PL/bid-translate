@@ -22,7 +22,7 @@ export async function POST(
 
     // Verify token and get participant
     const { data: participant, error: participantError } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("*, auctions(*), translators(*)")
       .eq("magic_link_token", token)
       .eq("auction_id", params.id)
@@ -53,7 +53,7 @@ export async function POST(
 
     // Confirm participation
     const { error: updateError } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .update({ confirmed_at: new Date().toISOString() })
       .eq("id", participant.id);
 
@@ -63,7 +63,7 @@ export async function POST(
 
     // Count total confirmed
     const { count: confirmedCount } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("*", { count: "exact", head: true })
       .eq("auction_id", params.id)
       .not("confirmed_at", "is", null);
