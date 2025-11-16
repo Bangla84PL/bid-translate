@@ -4,11 +4,21 @@ import Stripe from "stripe";
 import { createServiceRoleClient } from "@/lib/supabase/server";
 import { STRIPE_PLANS, PlanType } from "@/lib/stripe/config";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia",
-});
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("STRIPE_SECRET_KEY is not defined");
+  }
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2025-10-29.clover",
+  });
+}
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
+function getWebhookSecret() {
+  if (!process.env.STRIPE_WEBHOOK_SECRET) {
+    throw new Error("STRIPE_WEBHOOK_SECRET is not defined");
+  }
+  return process.env.STRIPE_WEBHOOK_SECRET;
+}
 
 /**
  * POST /api/webhooks/stripe
@@ -16,6 +26,8 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!;
  */
 export async function POST(request: NextRequest) {
   try {
+    const stripe = getStripe();
+    const webhookSecret = getWebhookSecret();
     const body = await request.text();
     const headersList = await headers();
     const signature = headersList.get("stripe-signature");
