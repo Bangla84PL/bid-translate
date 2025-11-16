@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+// import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
+// const jetbrainsMono = JetBrains_Mono({
+//   subsets: ["latin"],
+//   variable: "--font-jetbrains-mono",
+//   display: "swap",
+// });
 
 export const metadata: Metadata = {
   title: "BidTranslate - Reverse Auction Platform for Translation Agencies",
@@ -30,7 +30,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${jetbrainsMono.variable} font-sans antialiased`}>
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>
