@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
 
     // Check if user has an agency
     const { data: agency, error: agencyError } = await supabase
-      .from("agencies")
+      .from("bid_translate_agencies")
       .select("id, subscription_status, trial_ends_at")
       .eq("owner_id", data.user.id)
       .single();

@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
         // Update agency subscription
         await supabase
-          .from("agencies")
+          .from("bid_translate_agencies")
           .update({
             subscription_status: "active",
             plan_type: planType,
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
 
         // Reset monthly usage counter
         await supabase
-          .from("agencies")
+          .from("bid_translate_agencies")
           .update({
             auctions_used_this_month: 0,
             subscription_status: "active",
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
 
         // Mark subscription as expired
         await supabase
-          .from("agencies")
+          .from("bid_translate_agencies")
           .update({
             subscription_status: "expired",
           })

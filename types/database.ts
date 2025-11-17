@@ -11,7 +11,7 @@ export type BidDecision = "accept" | "decline" | "timeout";
 export interface Database {
   public: {
     Tables: {
-      agencies: {
+      bid_translate_agencies: {
         Row: {
           id: string;
           owner_id: string;
@@ -70,7 +70,7 @@ export interface Database {
           updated_at?: string;
         };
       };
-      translators: {
+      bid_translate_translators: {
         Row: {
           id: string;
           agency_id: string;
@@ -117,7 +117,7 @@ export interface Database {
           updated_at?: string;
         };
       };
-      auctions: {
+      bid_translate_auctions: {
         Row: {
           id: string;
           agency_id: string;
@@ -185,7 +185,7 @@ export interface Database {
           updated_at?: string;
         };
       };
-      auction_participants: {
+      bid_translate_auction_participants: {
         Row: {
           id: string;
           auction_id: string;
@@ -223,7 +223,7 @@ export interface Database {
           created_at?: string;
         };
       };
-      auction_bids: {
+      bid_translate_auction_bids: {
         Row: {
           id: string;
           auction_id: string;
