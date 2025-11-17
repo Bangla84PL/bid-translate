@@ -20,7 +20,7 @@ export async function GET(
     const supabase = await createServerSupabaseClient();
 
     const { data: auction, error } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .select("*")
       .eq("id", params.id)
       .eq("agency_id", agency.id)

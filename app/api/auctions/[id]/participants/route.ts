@@ -21,7 +21,7 @@ export async function GET(
 
     // Verify auction belongs to agency
     const { data: auction } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .select("id")
       .eq("id", params.id)
       .eq("agency_id", agency.id)
@@ -33,7 +33,7 @@ export async function GET(
 
     // Get participants with translator details
     const { data: participants, error } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select(`
         *,
         translators (

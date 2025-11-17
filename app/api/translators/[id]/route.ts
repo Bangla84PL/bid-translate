@@ -27,7 +27,7 @@ export async function PUT(
     const supabase = await createServerSupabaseClient();
 
     const { data: translator, error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .update({
         email: validatedData.email,
         first_name: validatedData.firstName,
@@ -85,7 +85,7 @@ export async function DELETE(
     const supabase = await createServerSupabaseClient();
 
     const { error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .delete()
       .eq("id", params.id)
       .eq("agency_id", agency.id);

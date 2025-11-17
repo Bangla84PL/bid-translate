@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     const supabase = await createServerSupabaseClient();
 
     const { data: translators, error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .select("*")
       .eq("agency_id", agency.id)
       .order("created_at", { ascending: false });
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     const supabase = await createServerSupabaseClient();
 
     const { count: translatorCount } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .select("*", { count: "exact", head: true })
       .eq("agency_id", agency.id);
 
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
 
     // Create translator
     const { data: translator, error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .insert({
         agency_id: agency.id,
         email: validatedData.email,

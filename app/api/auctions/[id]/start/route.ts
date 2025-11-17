@@ -22,7 +22,7 @@ export async function POST(
 
     // Get auction
     const { data: auction, error: auctionError } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .select("*")
       .eq("id", params.id)
       .eq("agency_id", agency.id)
@@ -41,7 +41,7 @@ export async function POST(
 
     // Count confirmed participants
     const { count: confirmedCount } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("*", { count: "exact", head: true })
       .eq("auction_id", params.id)
       .not("confirmed_at", "is", null);
@@ -49,7 +49,7 @@ export async function POST(
     if (!canStartAuction(confirmedCount || 0)) {
       // Mark as failed
       await supabase
-        .from("auctions")
+        .from("bid_translate_auctions")
         .update({ status: "failed" })
         .eq("id", params.id);
 
@@ -61,7 +61,7 @@ export async function POST(
 
     // Start auction
     const { error: updateError } = await supabase
-      .from("auctions")
+      .from("bid_translate_auctions")
       .update({
         status: "in_progress",
         started_at: new Date().toISOString(),

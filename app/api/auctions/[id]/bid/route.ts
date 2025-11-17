@@ -30,7 +30,7 @@ export async function POST(
 
     // Verify magic link token
     const { data: participant, error: participantError } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("*, auctions(*)")
       .eq("magic_link_token", token)
       .eq("auction_id", params.id)
@@ -63,7 +63,7 @@ export async function POST(
 
     // Record bid
     const { error: bidError } = await supabase
-      .from("auction_bids")
+      .from("bid_translate_auction_bids")
       .insert({
         auction_id: params.id,
         participant_id: participant.id,
@@ -80,7 +80,7 @@ export async function POST(
     // If declined, eliminate participant
     if (decision === "decline") {
       await supabase
-        .from("auction_participants")
+        .from("bid_translate_auction_participants")
         .update({
           eliminated_at: new Date().toISOString(),
           eliminated_round: auction.current_round,
@@ -90,7 +90,7 @@ export async function POST(
 
     // Count remaining participants
     const { count: remainingCount } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("*", { count: "exact", head: true })
       .eq("auction_id", params.id)
       .is("eliminated_at", null);
@@ -99,7 +99,7 @@ export async function POST(
     if (remainingCount === 1) {
       // Get the winner
       const { data: winner } = await supabase
-        .from("auction_participants")
+        .from("bid_translate_auction_participants")
         .select("*")
         .eq("auction_id", params.id)
         .is("eliminated_at", null)
@@ -108,12 +108,12 @@ export async function POST(
       if (winner) {
         // Mark as winner and complete auction
         await supabase
-          .from("auction_participants")
+          .from("bid_translate_auction_participants")
           .update({ is_winner: true })
           .eq("id", winner.id);
 
         await supabase
-          .from("auctions")
+          .from("bid_translate_auctions")
           .update({
             status: "completed",
             winner_id: winner.translator_id,
@@ -135,7 +135,7 @@ export async function POST(
     // Check if everyone declined (auction failed)
     if (remainingCount === 0) {
       await supabase
-        .from("auctions")
+        .from("bid_translate_auctions")
         .update({ status: "failed" })
         .eq("id", params.id);
 
@@ -147,13 +147,13 @@ export async function POST(
 
     // Check if all remaining participants have bid in this round
     const { count: pendingDecisions } = await supabase
-      .from("auction_participants")
+      .from("bid_translate_auction_participants")
       .select("id", { count: "exact", head: true })
       .eq("auction_id", params.id)
       .is("eliminated_at", null)
       .not("id", "in",
         supabase
-          .from("auction_bids")
+          .from("bid_translate_auction_bids")
           .select("participant_id")
           .eq("auction_id", params.id)
           .eq("round_number", auction.current_round)
@@ -165,7 +165,7 @@ export async function POST(
       const nextRound = auction.current_round + 1;
 
       await supabase
-        .from("auctions")
+        .from("bid_translate_auctions")
         .update({
           current_round: nextRound,
           current_price: nextPrice,

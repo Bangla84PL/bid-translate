@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     // Delete translator (CASCADE will handle related records)
     const { error } = await supabase
-      .from("translators")
+      .from("bid_translate_translators")
       .delete()
       .eq("id", translatorId)
       .eq("agency_id", agency.id);

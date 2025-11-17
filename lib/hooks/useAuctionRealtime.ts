@@ -30,7 +30,7 @@ export function useAuctionRealtime(auctionId: string) {
         {
           event: "UPDATE",
           schema: "public",
-          table: "auctions",
+          table: "bid_translate_auctions",
           filter: `id=eq.${auctionId}`,
         },
         (payload) => {
@@ -47,13 +47,13 @@ export function useAuctionRealtime(auctionId: string) {
         {
           event: "*",
           schema: "public",
-          table: "auction_participants",
+          table: "bid_translate_auction_participants",
           filter: `auction_id=eq.${auctionId}`,
         },
         async () => {
           // Recount remaining participants
           const { count } = await supabase
-            .from("auction_participants")
+            .from("bid_translate_auction_participants")
             .select("*", { count: "exact", head: true })
             .eq("auction_id", auctionId)
             .is("eliminated_at", null);
@@ -66,7 +66,7 @@ export function useAuctionRealtime(auctionId: string) {
     // Initial load
     const loadInitialData = async () => {
       const { data: auctionData } = await supabase
-        .from("auctions")
+        .from("bid_translate_auctions")
         .select("*")
         .eq("id", auctionId)
         .single();
@@ -76,7 +76,7 @@ export function useAuctionRealtime(auctionId: string) {
       }
 
       const { count } = await supabase
-        .from("auction_participants")
+        .from("bid_translate_auction_participants")
         .select("*", { count: "exact", head: true })
         .eq("auction_id", auctionId)
         .is("eliminated_at", null);
