@@ -199,8 +199,8 @@ In Vercel Project Settings → **Environment Variables**, add:
 ```bash
 # Supabase
 NEXT_PUBLIC_SUPABASE_URL=https://api.supabase.smartcamp.ai
-NEXT_PUBLIC_SUPABASE_ANON_KEY=***REDACTED_SUPABASE_ANON_KEY***
-SUPABASE_SERVICE_ROLE_KEY=***REDACTED_SUPABASE_SERVICE_KEY***
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 
 # Stripe (PRODUCTION)
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_xxx
